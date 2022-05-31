@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Italiana&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="style.css" />
+    <title>Eksamen JS</title>
+  </head>
+  <body>
+    <header>
+      <button id="quizButton">Quiz om hunder</button>
+      <div class="searchContainer">
+        <input
+          type="text"
+          name="searchBar"
+          id="searchBar"
+          class="searchBar"
+          placeholder="search"
+        />
+        <button id="searchBtn">🔍</button>
+      </div>
+    </header>
+    <main>
+      <div class="randomeContainer">
+        <h1>HIGHEST RATE:</h1>
+        <ul id="randomeList"></ul>
+        <button id="nextBtn">Next</button>
+      </div>
+
+      <div class="listContainer">
+        <h1>All users</h1>
+
+        <div class="dropdown" id="filterBtn">
+          <button class="dropbtn">Sort by</button>
+          <div class="dropdown-content">
+            <button id="male">Male</button>
+            <button id="female">Female</button>
+          </div>
+        </div>
+
+        <ul id="usersList"></ul>
+      </div>
+
+      <div id="favoritesContainer">
+        <h1>Favorites</h1>
+
+        <ul id="favoriteList"></ul>
+      </div>
+
+      <div id="searchResults"></div>
+
+      <div>
+        <div id="input-container">
+          <h1>Create your own user</h1>
+          <input type="text" id="img-input" placeholder="HTTP-adresse..." />
+          <input type="text" id="name-input" placeholder="name..." />
+          <input type="text" id="gender-input" placeholder="gender.." />
+          <input type="text" id="dateOfBirth-input" placeholder="age..." />
+          <input type="text" id="location-input" placeholder="location..." />
+          <input type="text" id="email-input" placeholder="email..." />
+          <input type="text" id="phone-input" placeholder="phone..." />
+        </div>
+      </div>
+    </main>
+
+    <div id="Quiz">
+      <div id="quizContainer"></div>
+      <div id="results"></div>
+    </div>
+
+    <script src="script.js"></script>
+  </body>
+</html>
