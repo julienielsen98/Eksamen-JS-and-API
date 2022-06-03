@@ -13,7 +13,7 @@
   </head>
   <body>
     <header>
-      <button id="quizButton">Quiz om hunder</button>
+      <button id="quizBtn">Quiz om hunder</button>
       <div class="searchContainer">
         <input
           type="text"
@@ -25,14 +25,17 @@
         <button id="searchBtn">🔍</button>
       </div>
     </header>
-    <main>
-      <div class="randomeContainer">
+    <section>
+      <div class="highestRateContainer">
         <h1>HIGHEST RATE:</h1>
-        <ul id="randomeList"></ul>
+        <ul id="highestRateList"></ul>
         <button id="nextBtn">Next</button>
       </div>
 
-      <div class="listContainer">
+      <div id="searchResults"></div>
+    </section>
+    <main>
+      <div class="userListContainer">
         <h1>All users</h1>
 
         <div class="dropdown" id="filterBtn">
@@ -46,31 +49,33 @@
         <ul id="usersList"></ul>
       </div>
 
-      <div id="favoritesContainer">
-        <h1>Favorites</h1>
-
-        <ul id="favoriteList"></ul>
-      </div>
-
-      <div id="searchResults"></div>
-
-      <div>
+      <div id="makeCardWrapper">
         <div id="input-container">
           <h1>Create your own user</h1>
           <input type="text" id="img-input" placeholder="HTTP-adresse..." />
           <input type="text" id="name-input" placeholder="name..." />
           <input type="text" id="gender-input" placeholder="gender.." />
           <input type="text" id="dateOfBirth-input" placeholder="age..." />
-          <input type="text" id="location-input" placeholder="location..." />
+          <input
+            type="text"
+            id="location-input"
+            placeholder="country, city..."
+          />
           <input type="text" id="email-input" placeholder="email..." />
           <input type="text" id="phone-input" placeholder="phone..." />
+          <input type="text" id="color-input" placeholder="color of card..." />
         </div>
+      </div>
+
+      <div id="favoritesContainer">
+        <h1>Favorites</h1>
+
+        <ul id="favoriteList"></ul>
       </div>
     </main>
 
-    <div id="Quiz">
+    <div id="quizWrapper">
       <div id="quizContainer"></div>
-      <div id="results"></div>
     </div>
 
     <script src="script.js"></script>

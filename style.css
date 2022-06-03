@@ -14,12 +14,25 @@ h1 {
 
 header {
   grid-area: header;
+  width: 100%;
   display: flex;
-  justify-content: right;
+  justify-content: space-between;
 }
+
+#searchBtn {
+  border-radius: 40px;
+  border: #2c7c4c solid thin;
+  background-color: rgb(255, 255, 255);
+  height: 40px;
+  font-size: 30px;
+  width: 50px;
+  margin-left: 285px;
+}
+
 #searchResults {
-  height: 100%;
-  opacity: 90%;
+  grid-area: searchResults;
+  text-align: center;
+  padding-right: 10px;
 }
 .searchContainer {
   width: 350px;
@@ -30,113 +43,73 @@ header {
   height: 0px;
   border: rgb(0, 0, 0);
   overflow: hidden;
-  margin-left: 100px;
 }
 
 .searchContainer:hover > .searchBar {
-  width: 170px;
+  position: absolute;
+  width: 200px;
+  margin-top: 6px;
+  margin-left: 80px;
   height: 35px;
   border: #2c7c4c solid thin;
   border-radius: 30px;
-  margin-bottom: 5px;
-  margin-top: 5px;
   text-align: center;
 }
 
-#searchBtn {
-  border-radius: 40px;
-  border: #2c7c4c solid thin;
-  background-color: rgb(255, 255, 255);
-  height: 40px;
-  margin: 5px;
-  font-size: 30px;
-  float: right;
+section {
+  display: grid;
+  height: 500px;
+  width: 100%;
+  grid-template-columns: 3fr 3fr 3fr 2fr;
+  grid-template-areas: "highestRateContainer highestRateContainer highestRateContainer searchResults";
+  background-position: center;
+  background-size: cover;
+  background-color: rgba(255, 255, 255, 0.6);
+  background-blend-mode: lighten;
+  padding-bottom: 30px;
+  position: sticky;
+  z-index: 1;
 }
 
-#favorite-navBtn {
-  border-radius: 40px;
-  border: #2c7c4c solid thin;
-  background-color: rgb(255, 255, 255);
-  height: 25px;
-  float: right;
-  margin-right: 5px;
-  margin-bottom: 5px;
+.highestRateContainer {
+  grid-area: highestRateContainer;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-left: 15%;
+}
+.highestRateContainer > h1 {
+  font-size: 40px;
+  padding-left: 25px;
+  position: absolute;
+}
+
+#highestRateList > .cards {
+  background-image: linear-gradient(
+    to right top,
+    #5454546c,
+    #ffffff,
+    #ffffffc2,
+    #666666
+  );
+  margin-top: 14%;
 }
 
 main {
   height: 100%;
   width: 100%;
   grid-area: main;
-  grid-template-rows: 60% 40%;
-  grid-template-columns: 3fr 3fr 3fr 2fr;
-  grid-template-areas:
-    " randomeContainer randomeContainer randomeContainer searchResults"
-    "listContainer favoritesList inputContainer searchResults";
+  grid-template-columns: 2fr 1fr 2fr;
+  grid-template-areas: "userListContainer makeCardWrapper favoritesList ";
   display: grid;
-}
-
-.randomeContainer {
-  grid-area: randomeContainer;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  margin-left: 15%;
-}
-
-.listContainer {
-  grid-area: listContainer;
-  display: grid;
-  grid-template-rows: 20% 10% 60%;
-  grid-template-areas:
-    "h1"
-    "filterBtn"
-    "usersList";
-  display: grid;
-  justify-content: center;
-}
-
-#filterBtn {
-  grid-area: filterBtn;
-}
-
-#usersList {
-  grid-area: usersList;
-  justify-content: flex-start;
-}
-
-#favoritesContainer {
-  grid-area: favoritesList;
-  justify-content: center;
-  grid-template-rows: 30% 80%;
-  grid-template-areas:
-    "h1"
-    "favoriteList";
-  display: grid;
-}
-
-#favoriteList {
-  grid-area: favoriteList;
-}
-
-#input-container {
-  grid-area: inputContainer;
-  justify-content: center;
-}
-
-#searchResults {
-  grid-area: searchResults;
-  text-align: center;
-  padding-right: 40px;
 }
 
 .cards {
-  color: #000000;
   background-image: linear-gradient(
     to right top,
     #ffffff,
-    #0204031b,
-    #0c301a65,
+    #bfab461b,
+    #8e762865,
     #ffffff
   );
   justify-content: center;
@@ -144,9 +117,9 @@ main {
   list-style: none;
   margin: 5px;
   flex-direction: column;
-  height: 300px;
-  width: 380px;
-  border-radius: 10px;
+  height: 310px;
+  width: 450px;
+  border-radius: 3px;
   position: relative;
   font-family: "Trebuchet MS", "Lucida Sans Unicode", "Lucida Grande",
     "Lucida Sans", Arial, sans-serif;
@@ -161,6 +134,40 @@ main {
   margin-top: 4%;
 }
 
+.userListContainer {
+  grid-area: userListContainer;
+  text-align: center;
+}
+
+#filterBtn {
+  grid-area: filterBtn;
+}
+
+#favoritesContainer {
+  grid-area: favoritesList;
+  text-align: center;
+}
+
+#favoriteList {
+  z-index: 0;
+}
+
+#makeCardWrapper {
+  grid-area: makeCardWrapper;
+  text-align: center;
+}
+
+#highestRateList > .cards {
+  width: 600px;
+  height: 340px;
+  z-index: 1;
+}
+
+#highestRateList > .cards > img {
+  width: 100px;
+  height: 100px;
+}
+
 .map-container {
   position: relative;
   z-index: 1;
@@ -168,27 +175,11 @@ main {
   margin-top: -200px;
 }
 
-/*.favorite-btn {
-  width: 41px;
-  background-color: #ffffff00;
-  border-radius: 50px;
-  border: #00000000 solid;
-  opacity: 50%;
-  font-size: 30px;
-}*/
-
-.favorite-btn:hover {
-  opacity: 90%;
-}
-
 #input-container {
-  position: relative;
   grid-area: inputContainer;
   display: flex;
   flex-direction: column;
-  justify-content: space-around;
   align-items: center;
-  height: 400px;
   width: 350px;
   font-size: 21px;
   letter-spacing: 0px;
@@ -202,22 +193,45 @@ main {
 
 #input-container > input {
   width: 90%;
-  height: 40px;
+  height: 30px;
   border-radius: 10px;
+}
+
+.ownCard {
+  margin-right: 40px;
+}
+
+.ownCard > .cards {
+  font-size: 15px;
+  height: 400px;
+  width: 320px;
+}
+.ownCard > .cards > img {
+  height: 100px;
+  width: 100px;
 }
 
 button {
   height: 40px;
+  background-color: #ffffff;
+  color: #000000;
+  border-radius: 10px;
+  background-color: #000000 solid;
+  width: 150px;
+  margin-top: 5px;
+  margin-bottom: 5px;
+  font-size: 16px;
+}
+
+button:hover {
+  background-color: #282a2cc4;
+  color: #ffffff;
+  border: #ffffff solid;
 }
 
 .dropbtn {
-  background-color: #04aa6d;
-  color: white;
-  padding: 16px;
   font-size: 16px;
-  border: none;
   height: 50px;
-  width: 100px;
 }
 
 .dropdown {
@@ -230,6 +244,7 @@ button {
   position: absolute;
   box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
   z-index: 1;
+  width: 100%;
 }
 
 .dropdown-content button {
@@ -241,14 +256,35 @@ button {
 }
 
 .dropdown:hover .dropbtn {
-  background-color: #3e8e41;
+  background-color: #282a2c;
+  color: #ffffff;
 }
 
-#Quiz {
+.edit-btn {
+  padding: 5px;
+  color: white;
+  background-color: #265c5c;
+  width: 150px;
+  border: 0 none;
+  border-radius: 20px;
+  margin: 10px;
+  text-align: center;
+  cursor: pointer;
+  text-transform: uppercase;
+}
+
+input {
+  color: #265c5c;
+}
+
+#quizWrapper {
   display: flex;
   flex-direction: column;
   text-align: center;
   margin-top: 100px;
+}
+#quizWrapper > button {
+  width: 100%;
 }
 
 .question {

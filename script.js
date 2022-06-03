@@ -3,11 +3,10 @@ let ownCardArray = [];
 
 const loadResults = async () => {
   const objects = await fetch(
-    "https://randomuser.me/api/?page=3&results=10&seed=abc"
+    "https://randomuser.me/api/?page=2&results=100&seed=abc"
   );
 
   const users = await objects.json();
-  console.log("header array:", usersArray);
 
   users.results.forEach((users) => {
     usersClass = new Users(
@@ -39,16 +38,22 @@ class Users {
   }
 }
 
+//Searchbar
+
 let searchResults = document.getElementById(`searchResults`);
 const resultsList = document.createElement(`ul`);
 
 let searchBtn = document.getElementById("searchBtn");
 searchBtn.addEventListener("click", () => {
   searchResults.append(resultsList);
+  searchResults.style.backgroundColor = "white";
+  searchResults.style.width = "250px";
 });
 
 resultsList.addEventListener("mouseout", () => {
   resultsList.remove();
+  searchResults.style.backgroundColor = null;
+  searchResults.style.width = null;
 });
 
 const searchBar = document.getElementById("searchBar");
@@ -70,7 +75,7 @@ const displaySearchResults = (usersClass) => {
     .map((users) => {
       return ` 
        <p> ${users.name},
- ${users.dob}, ${users.gender} -
+ ${users.dob}, ${users.gender} 
   ${users.location} - 
    mail: ${users.email} , Phone: ${users.phone} </p> - `;
     })
@@ -78,7 +83,9 @@ const displaySearchResults = (usersClass) => {
   resultsList.innerHTML = htmlString;
 };
 
-const randomeList = document.getElementById(`randomeList`);
+//Herosection
+
+const highestRateList = document.getElementById(`highestRateList`);
 const nextBtn = document.getElementById("nextBtn");
 
 nextBtn.addEventListener("click", () => {
@@ -90,7 +97,7 @@ nextBtn.addEventListener("click", () => {
 
   const result = getRandomItem(usersArray);
 
-  randomeList.innerHTML = `<li class="cards" > <img src="${result.picture}" alt="users-images"/> 
+  highestRateList.innerHTML = `<li class="cards" > <img src="${result.picture}" alt="users-images"/> 
       <h3> ${result.name},   ${result.dob} </h3> 
         <p> ${result.location} </p>
         <p> Mail: ${result.email} </p>
@@ -98,12 +105,12 @@ nextBtn.addEventListener("click", () => {
        </li> `;
 });
 
-window.addEventListener("load", (event) => {
+window.addEventListener("load", () => {
   loadResults();
 });
 
 function displayResults() {
-  randomeList.innerHTML = `<li class="cards" > <img src="${usersClass.picture}" alt="users-images"/> 
+  highestRateList.innerHTML = `<li class="cards" > <img src="${usersClass.picture}" alt="users-images"/> 
       <h3> ${usersClass.name},   ${usersClass.dob} </h3> 
         <p> ${usersClass.location} </p>
         <p> Mail: ${usersClass.email} </p>
@@ -111,6 +118,36 @@ function displayResults() {
        </li> 
        `;
 }
+
+//Herosection Slideshow
+
+var i = 0;
+var images = [];
+
+var slideTime = 4000;
+
+images[0] =
+  "https://cdn.pixabay.com/photo/2016/11/01/10/29/dog-1787835_1280.jpg";
+images[1] =
+  "https://cdn.pixabay.com/photo/2017/03/27/13/23/dog-2178696_1280.jpg";
+images[2] =
+  "https://cdn.pixabay.com/photo/2022/02/09/20/52/labrador-retriever-7004193_1280.jpg";
+
+function changePicture() {
+  let section = document.querySelector("section");
+  section.style.backgroundImage = "url(" + images[i] + ")";
+
+  if (i < images.length - 1) {
+    i++;
+  } else {
+    i = 0;
+  }
+  setTimeout(changePicture, slideTime);
+}
+
+window.onload = changePicture;
+
+//Main; All users + list of favorites
 
 const usersList = document.getElementById(`usersList`);
 
@@ -129,15 +166,24 @@ function displayUsers(filter) {
   usersList.innerHTML = "";
 
   for (let i = 0; i < usersArray.length; i++) {
-    let li = document.createElement("li");
+    let card = document.createElement("li");
     if (usersArray[i].gender === `${filter}`) {
-      li.classList.add("cards");
-      li.innerHTML = `<img src="${usersArray[i].picture}" alt="users-images"/> 
+      card.classList.add("cards");
+      card.innerHTML = `<img src="${usersArray[i].picture}" alt="users-images"/> 
       <h3> ${usersArray[i].name},${usersArray[i].dob} </h3>
         <p> ${usersArray[i].location} </p>
         <p> Mail: ${usersArray[i].email}  </p>
         <p> Phone: ${usersArray[i].phone} </p>
          `;
+
+      card.style.backgroundColor = `rgb(${Math.floor(
+        Math.random() * 100 + 155
+      )}, ${Math.floor(Math.random() * 100 + 155)}, ${Math.floor(
+        Math.random() * 100 + 155
+      )})`;
+
+      //MAP: Aware of issues warning about cookies, decided not to prioritize it, because thrid-party is not involved atm.
+      //Used data "city" as referance on map, because API does not generate coordinates+adress+cities that matches a real adress.
       let mapsBtn = document.createElement("button");
       mapsBtn.classList.add("maps-btn");
       mapsBtn.innerHTML = "map";
@@ -145,7 +191,7 @@ function displayUsers(filter) {
       mapsBtn.addEventListener("mouseover", () => {
         let map = document.createElement("div");
         map.classList.add("map-container");
-        li.append(map);
+        card.append(map);
         map.innerHTML = ` <iframe
               width="300"
               height="200"
@@ -165,28 +211,31 @@ function displayUsers(filter) {
       let favoriteBtn = document.createElement("button");
       favoriteBtn.classList.add("favorite-btn");
       favoriteBtn.innerText = "Favorite ";
-      li.append(favoriteBtn, mapsBtn);
-      usersList.append(li);
+      card.append(favoriteBtn, mapsBtn);
+      usersList.append(card);
 
       favoriteBtn.addEventListener("click", () => {
         let moveBackBtn = document.createElement("button");
         moveBackBtn.innerText = "remove";
         favoriteBtn.remove();
-        li.append(moveBackBtn);
-        favoriteList.append(li);
+        card.append(moveBackBtn);
+        favoriteList.append(card);
 
         moveBackBtn.addEventListener("click", () => {
-          usersList.append(li);
+          usersList.append(card);
         });
       });
     }
   }
 }
 
+//Create own card
+
 let inputContainer = document.getElementById("input-container");
 let createUserBtn = document.createElement("button");
 createUserBtn.innerText = "Add user";
 let ownCardContainer = document.createElement("ul");
+ownCardContainer.classList.add("ownCard");
 inputContainer.append(createUserBtn, ownCardContainer);
 
 createUserBtn.addEventListener("click", () => {
@@ -201,6 +250,7 @@ function addUser() {
   let inputLocation = document.getElementById(`location-input`).value;
   let inputEmail = document.getElementById(`email-input`).value;
   let inputPhone = document.getElementById(`phone-input`).value;
+  let inputColor = document.getElementById(`color-input`).value;
 
   const newUser = {
     picture: inputImg,
@@ -210,13 +260,16 @@ function addUser() {
     location: inputLocation,
     email: inputEmail,
     phone: inputPhone,
+    color: inputColor,
   };
-  if (newUser.picture === "" || newUser.gender === "male") {
+
+  if (newUser.picture === "" && newUser.gender === "male") {
     newUser.picture = `https://cdn.pixabay.com/photo/2017/02/23/13/05/avatar-2092113__340.png`;
   }
-  if (newUser.picture === "" || newUser.gender === "female") {
+  if (newUser.picture === "" && newUser.gender === "female") {
     newUser.picture = `https://cdn.pixabay.com/photo/2016/04/26/07/20/woman-1353803__340.png`;
   }
+
   if (newUser.name === "" || newUser.gender === "") {
     alert("Name & gender must be filled in");
   } else {
@@ -230,62 +283,47 @@ function addUser() {
   }
 }
 
-let deleteBtn = document.createElement("button");
-deleteBtn.innerText = "remove";
-
 function showCard() {
   ownCardContainer.innerHTML = "";
   usersList.innerHTML = "";
 
   for (let i = 0; i < ownCardArray.length; i++) {
-    ownCardContainer.innerHTML += `<div class="cards"> <img src="${ownCardArray[i].picture}" alt="users-images"/> 
+    ownCardContainer.innerHTML += `<li class="cards" style=background-color:${ownCardArray[i].color};> <img src="${ownCardArray[i].picture}" alt="users-images"/> 
       <h3> ${ownCardArray[i].name},${ownCardArray[i].dob} </h3>
         <p> ${ownCardArray[i].location} </p>
         <p> Mail: ${ownCardArray[i].email}  </p>
-        <p> Phone: ${ownCardArray[i].phone} </p> </div>
+        <p> Phone: ${ownCardArray[i].phone} </p>
+        <button onclick="deleteCard(${i})"> delete </button>
+        </li>
        `;
-
-    ownCardContainer.append(deleteBtn);
   }
 }
-
-deleteBtn.addEventListener("click", () => {
-  deleteCard();
-});
 
 function deleteCard(i) {
   ownCardArray.splice(i, 1);
   usersArray.splice(i, 1);
-
   showCard();
 }
 
-console.log("OwnC array:", ownCardArray);
-console.log("Users array:", usersArray);
+//Quiz
 
-/*----------QUIZ------------------------*/
 let body = document.querySelector("body");
-let quizButton = document.getElementById("quizButton");
-let Quiz = document.getElementById("Quiz");
+let quizBtn = document.getElementById("quizBtn");
+let quizWrapper = document.getElementById("quizWrapper");
 let quizQuestion = document.getElementById("quiz-question");
 
-quizButton.onclick = function () {
-  body.replaceWith(Quiz);
+quizBtn.onclick = function () {
+  body.replaceWith(quizWrapper);
 
-  let submitButton = document.createElement("button");
+  let submitBtn = document.createElement("button");
 
-  submitButton.innerText = "Sjekk resultatet";
+  submitBtn.innerText = "Check results";
 
-  Quiz.append(submitButton);
+  quizWrapper.append(submitBtn);
 
-  submitButton.id = "submit";
+  submitBtn.id = "submit";
 
-  function generateQuiz(
-    questions,
-    quizContainer,
-    resultsContainer,
-    submitButton
-  ) {
+  function generateQuiz(questions, quizContainer, resultsContainer, submitBtn) {
     function showQuestions(questions, quizContainer) {
       var output = [];
       var answers;
@@ -347,7 +385,7 @@ quizButton.onclick = function () {
       resultsContainer.innerHTML = numCorrect + " out of " + questions.length;
     }
 
-    submitButton.onclick = function () {
+    submitBtn.onclick = function () {
       showResults(questions, quizContainer, resultsContainer);
     };
 
@@ -385,20 +423,20 @@ quizButton.onclick = function () {
   ];
   var quizContainer = document.getElementById("quizContainer");
   var resultsContainer = document.createElement("p");
-  Quiz.append(resultsContainer);
+  quizWrapper.append(resultsContainer);
 
-  generateQuiz(myQuestions, quizContainer, resultsContainer, submitButton);
+  generateQuiz(myQuestions, quizContainer, resultsContainer, submitBtn);
 
   let returnBtn = document.createElement("button");
-  returnBtn.innerText = "Tilbake";
+  returnBtn.innerText = "Go back";
 
-  Quiz.append(returnBtn);
+  quizWrapper.append(returnBtn);
 
   returnBtn.addEventListener("click", returnToMain);
   function returnToMain() {
-    Quiz.replaceWith(body);
+    quizWrapper.replaceWith(body);
     returnBtn.remove();
-    submitButton.remove();
+    submitBtn.remove();
     resultsContainer.remove();
   }
 };
